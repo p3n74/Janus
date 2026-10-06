@@ -1,0 +1,17 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+      - uses: oven-sh/setup-bun@v2
+        with:
+          bun-version: 1.4.2
+      - run: bun install --frozen-lockfile
+      - run: bunx turbo run check-types --filter=@whatsapp-crm/api --filter=@whatsapp-crm/auth --filter=@whatsapp-crm/db --filter=@whatsapp-crm/ui --filter=server
+      - run: bun test packages/auth packages/api
