@@ -5,7 +5,13 @@ WORKDIR /app
 COPY . .
 RUN chmod +x /app/docker/start.sh
 
-RUN bun install --frozen-lockfile
+# The Expo app is not in this image. Skip its workspace and optional Expo
+# peer deps so install stays a few hundred packages instead of the full native tree.
+ENV CI=1
+RUN bun install --frozen-lockfile --ignore-scripts --omit=peer \
+  && varlock codegen --path ./apps/web/ \
+  && varlock codegen --path ./apps/server/ \
+  && varlock codegen --path ./packages/db/
 
 ARG VITE_SERVER_URL=https://janus.citadel-codex.com
 ARG NODE_ENV=production

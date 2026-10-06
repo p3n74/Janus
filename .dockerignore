@@ -4,6 +4,7 @@ node_modules
 .winnow
 .git
 .github
+apps/native
 **/.env
 **/.env.local
 **/.env*.local
