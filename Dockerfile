@@ -9,9 +9,9 @@ RUN chmod +x /app/docker/start.sh
 # peer deps so install stays a few hundred packages instead of the full native tree.
 ENV CI=1
 RUN bun install --frozen-lockfile --ignore-scripts --omit=peer \
-  && varlock codegen --path ./apps/web/ \
-  && varlock codegen --path ./apps/server/ \
-  && varlock codegen --path ./packages/db/
+  && ./node_modules/.bin/varlock codegen --path ./apps/web/ \
+  && ./node_modules/.bin/varlock codegen --path ./apps/server/ \
+  && ./node_modules/.bin/varlock codegen --path ./packages/db/
 
 ARG VITE_SERVER_URL=https://janus.citadel-codex.com
 ARG NODE_ENV=production
