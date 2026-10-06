@@ -2,6 +2,11 @@
 FROM oven/bun:1.3.2 AS base
 WORKDIR /app
 
+USER root
+RUN apt-get update \
+  && apt-get install -y --no-install-recommends curl \
+  && rm -rf /var/lib/apt/lists/*
+
 # Build stage
 FROM base AS builder
 
@@ -30,25 +35,20 @@ FROM base AS runner
 # Set production environment
 ENV NODE_ENV=production
 
-# Google Cloud Run sets PORT environment variable automatically
-# The app will use PORT if set, otherwise defaults to 3000
-ENV PORT=3002
+# Coolify / reverse proxies set PORT; default to 3000 for this host
+ENV PORT=3000
 
 WORKDIR /app
 
 # Copy built application and dependencies from builder
 COPY --from=builder /app /app
+RUN chmod +x /app/docker/start.sh
 
-# Expose port (Cloud Run will use PORT env var, but this is for documentation)
-EXPOSE 3002
+EXPOSE 3000
 
-# Health check for Cloud Run (optional but recommended)
-# Note: Cloud Run has its own health checks, this is just for Docker
-HEALTHCHECK --interval=30s --timeout=3s --start-period=60s --retries=3 \
-  CMD bun --version || exit 1
+# Coolify HTTP probes need curl in the image
+HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
+  CMD curl -fsS http://127.0.0.1:${PORT:-3000}/health || exit 1
 
-# Start the server
-# Cloud Run will automatically set PORT env var, which the app will use
-# Run source directly with Bun (Bun handles TypeScript and workspaces natively)
-# This ensures proper module resolution for dynamic imports and external deps
-CMD ["bun", "run", "--cwd", "apps/server", "src/index.ts"]
+# Push Prisma schema, seed the admin whitelist row, then start the API
+CMD ["bun", "run", "docker/start.sh"]
