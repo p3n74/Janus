@@ -51,4 +51,4 @@ HEALTHCHECK --interval=30s --timeout=5s --start-period=60s --retries=3 \
   CMD curl -fsS http://127.0.0.1:${PORT:-3000}/health || exit 1
 
 # Push Prisma schema, seed the admin whitelist row, then start the API
-CMD ["bun", "run", "docker/start.sh"]
+CMD ["sh", "/app/docker/start.sh"]

@@ -1,7 +1,9 @@
 #!/bin/sh
 set -eu
 
-cd /app
-bun run db:push
-bun run --cwd packages/db seed-admin || true
-exec bun run --cwd apps/server src/index.ts
+cd /app/packages/db
+bunx prisma db push
+bun run ./seed-admin.ts || true
+
+cd /app/apps/server
+exec bun src/index.ts

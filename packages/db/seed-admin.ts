@@ -27,7 +27,7 @@ async function main() {
       email: adminEmail,
       role: "ADMIN",
     },
-  };
+  });
 
   console.log(
     `Authorized user saved. email=${authorizedUser.email}, role=${authorizedUser.role}`,
