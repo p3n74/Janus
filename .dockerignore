@@ -1,0 +1,14 @@
+node_modules
+.turbo
+.agents
+.winnow
+.git
+.github
+**/.env
+**/.env.local
+**/.env*.local
+dist
+apps/web/dist
+apps/server/dist
+*.log
+.DS_Store

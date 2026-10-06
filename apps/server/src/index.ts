@@ -1,7 +1,11 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
+
 import { trpcServer } from "@hono/trpc-server";
 import { appRouter } from "@whatsapp-crm/api/routers/index";
 import { Hono } from "hono";
 import { cors } from "hono/cors";
+import { serveStatic } from "hono/bun";
 
 import { createContext } from "./context";
 import { ENV } from "./env.server";
@@ -12,14 +16,14 @@ const app = new Hono();
 app.use("*", async (c, next) => {
   const started = Date.now();
   await next();
-  const path = new URL(c.req.url).pathname;
+  const pathname = new URL(c.req.url).pathname;
   console.log(
     JSON.stringify({
       ts: new Date().toISOString(),
       level: "info",
       event: "request",
       method: c.req.method,
-      path,
+      path: pathname,
       status: c.res.status,
       ms: Date.now() - started,
     }),
@@ -48,8 +52,17 @@ app.use(
   }),
 );
 
-app.get("/", (c) => {
+app.get("/health", (c) => {
   return c.text("OK");
 });
 
-export default app;
+const webDist = path.resolve(import.meta.dir, "../../web/dist");
+if (existsSync(webDist)) {
+  app.use("*", serveStatic({ root: webDist }));
+  app.get("*", serveStatic({ path: path.join(webDist, "index.html") }));
+}
+
+export default {
+  port: Number(process.env.PORT ?? 3000),
+  fetch: app.fetch,
+};

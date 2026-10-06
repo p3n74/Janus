@@ -18,6 +18,7 @@ local.db-*
 .env*.local
 
 # IDEs and editors
+.cursor/mcp.json
 .vscode/*
 !.vscode/settings.json
 !.vscode/tasks.json
