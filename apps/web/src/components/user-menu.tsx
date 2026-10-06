@@ -1,5 +1,5 @@
 import { Link, useNavigate } from "@tanstack/react-router";
-import { Button } from "@whatsapp-crm/ui/components/button";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,10 +8,11 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@whatsapp-crm/ui/components/dropdown-menu";
-import { Skeleton } from "@whatsapp-crm/ui/components/skeleton";
-
+} from "@/components/ui/dropdown-menu";
 import { authClient } from "@/lib/auth-client";
+
+import { Button } from "./ui/button";
+import { Skeleton } from "./ui/skeleton";
 
 export default function UserMenu() {
   const navigate = useNavigate();
@@ -31,14 +32,14 @@ export default function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger render={<Button variant="outline" />}>
-        {session.user.name}
+      <DropdownMenuTrigger render={(props) => <Button variant="outline" {...props} />}>
+        {session.user?.name ?? "User"}
       </DropdownMenuTrigger>
       <DropdownMenuContent className="bg-card">
         <DropdownMenuGroup>
           <DropdownMenuLabel>My Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
-          <DropdownMenuItem>{session.user.email}</DropdownMenuItem>
+          <DropdownMenuItem>{session.user?.email ?? ""}</DropdownMenuItem>
           <DropdownMenuItem
             variant="destructive"
             onClick={() => {

@@ -1,6 +1,10 @@
 {
-  "extends": "@whatsapp-crm/config/tsconfig.base.json",
+  "extends": "@template/config/tsconfig.base.json",
   "compilerOptions": {
-    "noEmit": true
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
+    "outDir": "dist",
+    "composite": true
   }
 }

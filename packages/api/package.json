@@ -1,22 +1,32 @@
 {
-  "name": "@whatsapp-crm/api",
+  "name": "@template/api",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/*.ts"
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
   },
-  "scripts": {
-    "check-types": "tsc --noEmit"
-  },
+  "scripts": {},
   "dependencies": {
+    "@template/auth": "workspace:*",
+    "@template/db": "workspace:*",
+    "@template/env": "workspace:*",
+    "@prisma/client": "catalog:",
+    "@prisma/extension-accelerate": "^3.0.1",
     "@trpc/client": "catalog:",
     "@trpc/server": "catalog:",
-    "@whatsapp-crm/auth": "workspace:*",
-    "@whatsapp-crm/db": "workspace:*",
+    "better-auth": "catalog:",
+    "dotenv": "catalog:",
+    "nodemailer": "^8.0.4",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@whatsapp-crm/config": "workspace:*",
-    "typescript": "^6.0.3"
+    "@template/config": "workspace:*",
+    "@types/express": "catalog:",
+    "@types/nodemailer": "^8.0.0",
+    "typescript": "catalog:"
   }
 }

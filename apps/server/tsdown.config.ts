@@ -5,7 +5,7 @@ export default defineConfig({
   format: "esm",
   outDir: "./dist",
   clean: true,
-  deps: {
-    alwaysBundle: [/@whatsapp-crm\/.*/],
-  },
+  noExternal: [/@template\/.*/],
+  // Resolve from node_modules at runtime; bundler can't resolve from workspace db package
+  external: ["@prisma/adapter-pg", "@prisma/driver-adapter-utils", "pg"],
 });

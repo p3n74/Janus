@@ -9,7 +9,6 @@ import { queryClient, trpc } from "./utils/trpc";
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
-  scrollRestoration: true,
   defaultPendingComponent: () => <Loader />,
   context: { trpc, queryClient },
   Wrap: function WrapComponent({ children }: { children: React.ReactNode }) {

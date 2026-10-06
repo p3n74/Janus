@@ -1,24 +1,27 @@
 {
-  "name": "@whatsapp-crm/auth",
+  "name": "@template/auth",
   "type": "module",
   "exports": {
-    ".": "./src/index.ts",
-    "./*": "./src/*.ts"
+    ".": {
+      "default": "./src/index.ts"
+    },
+    "./*": {
+      "default": "./src/*.ts"
+    }
   },
-  "scripts": {
-    "check-types": "tsc --noEmit"
-  },
+  "scripts": {},
   "dependencies": {
-    "@better-auth/core": "1.7.7",
-    "@better-auth/drizzle-adapter": "1.7.7",
     "@better-auth/expo": "catalog:",
-    "@whatsapp-crm/db": "workspace:*",
+    "@template/db": "workspace:*",
+    "@template/env": "workspace:*",
+    "@prisma/client": "catalog:",
+    "@prisma/extension-accelerate": "^3.0.1",
     "better-auth": "catalog:",
-    "drizzle-orm": "catalog:",
+    "dotenv": "catalog:",
     "zod": "catalog:"
   },
   "devDependencies": {
-    "@whatsapp-crm/config": "workspace:*",
-    "typescript": "^6.0.3"
+    "@template/config": "workspace:*",
+    "typescript": "catalog:"
   }
 }

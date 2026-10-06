@@ -1,10 +1,10 @@
-import { QueryCache, QueryClient } from "@tanstack/react-query";
-import { createTRPCClient, httpBatchLink } from "@trpc/client";
-import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
-import type { AppRouter } from "@whatsapp-crm/api/routers/index";
-import { toast } from "sonner";
+import type { AppRouter } from "@template/api/routers/index";
 
-import { ENV } from "../env";
+import { env } from "@template/env/web";
+import { QueryCache, QueryClient } from "@tanstack/react-query";
+import { createTRPCClient, httpLink } from "@trpc/client";
+import { createTRPCOptionsProxy } from "@trpc/tanstack-react-query";
+import { toast } from "sonner";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
@@ -12,9 +12,7 @@ export const queryClient = new QueryClient({
       toast.error(error.message, {
         action: {
           label: "retry",
-          onClick: () => {
-            query.invalidate();
-          },
+          onClick: query.invalidate,
         },
       });
     },
@@ -23,8 +21,8 @@ export const queryClient = new QueryClient({
 
 export const trpcClient = createTRPCClient<AppRouter>({
   links: [
-    httpBatchLink({
-      url: `${ENV.VITE_SERVER_URL.replace(/\/$/, "")}/trpc`,
+    httpLink({
+      url: `${env.VITE_SERVER_URL}/trpc`,
       fetch(url, options) {
         return fetch(url, {
           ...options,

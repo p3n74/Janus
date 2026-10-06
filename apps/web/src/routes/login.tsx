@@ -1,11 +1,12 @@
-import { createFileRoute } from "@tanstack/react-router";
-
-import SignInForm from "@/components/sign-in-form";
+import { createFileRoute, redirect } from "@tanstack/react-router";
 
 export const Route = createFileRoute("/login")({
-  component: RouteComponent,
+  beforeLoad: () => {
+    // Redirect to home page where login form now lives
+    redirect({
+      to: "/",
+      throw: true,
+    });
+  },
+  component: () => null,
 });
-
-function RouteComponent() {
-  return <SignInForm />;
-}

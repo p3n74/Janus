@@ -1,13 +1,13 @@
-import { Button } from "@whatsapp-crm/ui/components/button";
+import { Moon, Sun } from "lucide-react";
+
+import { useTheme } from "@/components/theme-provider";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@whatsapp-crm/ui/components/dropdown-menu";
-import { Moon, Sun } from "lucide-react";
-
-import { useTheme } from "@/components/theme-provider";
+} from "@/components/ui/dropdown-menu";
 
 export function ModeToggle() {
   const { setTheme } = useTheme();
