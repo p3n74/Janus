@@ -1,0 +1,22 @@
+{
+  "name": "@whatsapp-crm/api",
+  "type": "module",
+  "exports": {
+    ".": "./src/index.ts",
+    "./*": "./src/*.ts"
+  },
+  "scripts": {
+    "check-types": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@trpc/client": "catalog:",
+    "@trpc/server": "catalog:",
+    "@whatsapp-crm/auth": "workspace:*",
+    "@whatsapp-crm/db": "workspace:*",
+    "zod": "catalog:"
+  },
+  "devDependencies": {
+    "@whatsapp-crm/config": "workspace:*",
+    "typescript": "^6.0.3"
+  }
+}
